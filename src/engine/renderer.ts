@@ -18,9 +18,8 @@ export async function renderElementToImage(
     : getDefaultFonts();
 
   // 1. Generate SVG via Satori with emoji support
-  const svg = await satori(element as any, {
+  const satoriOptions: any = {
     width,
-    height,
     fonts: fonts as any,
     loadAdditionalAsset: async (code: string, segment: string) => {
       if (code === "emoji") {
@@ -40,7 +39,12 @@ export async function renderElementToImage(
       }
       return undefined;
     },
-  });
+  };
+  if (height) {
+    satoriOptions.height = height;
+  }
+
+  const svg = await satori(element as any, satoriOptions);
 
   // 2. Render SVG to high-res PNG via Rust-backed Resvg
   const resvg = new Resvg(svg, {

@@ -116,6 +116,7 @@ export interface UnifiedComment {
   publishedAt?: string;
   timestamp?: number;
   isPinned?: boolean;
+  pinnedBy?: string;
   isAuthorLiked?: boolean;
   reactionType?: "like" | "love" | "care" | "haha" | "wow" | "sad" | "angry";
   reactions?: UnifiedReactions;

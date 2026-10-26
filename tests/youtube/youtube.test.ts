@@ -74,7 +74,9 @@ describe("▶️ YouTube UI Templates", () => {
       author: {
         id: "dev_junior",
         name: "Alex Dev",
+        uniqueId: "AlexDev",
         isVerified: false,
+        avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
       },
       isPinned: true,
       isAuthorLiked: true,
@@ -89,6 +91,7 @@ describe("▶️ YouTube UI Templates", () => {
             id: "tech_lead",
             name: "Fireship Code",
             isAuthor: true,
+            avatarUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
           },
           likes: 120,
           timestamp: Date.now() - 6 * 3600 * 1000,

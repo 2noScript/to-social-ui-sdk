@@ -56,6 +56,30 @@ export function formatSocialTime(publishedAt?: string, timestamp?: number): stri
 }
 
 /**
+ * Formats published date into YouTube's authentic relative format:
+ * "Just now", "45 minutes ago", "12 hours ago", "2 days ago", "3 weeks ago", "1 month ago", "2 years ago"
+ */
+export function formatYouTubeTime(publishedAt?: string, timestamp?: number): string {
+  const time = timestamp || (publishedAt ? new Date(publishedAt).getTime() : 0);
+  if (!time) return "Just now";
+
+  const diffSec = Math.max(0, Math.floor((Date.now() - time) / 1000));
+  if (diffSec < 60) return "Just now";
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return `${diffMin} ${diffMin === 1 ? "minute" : "minutes"} ago`;
+  const diffHour = Math.floor(diffMin / 60);
+  if (diffHour < 24) return `${diffHour} ${diffHour === 1 ? "hour" : "hours"} ago`;
+  const diffDay = Math.floor(diffHour / 24);
+  if (diffDay < 7) return `${diffDay} ${diffDay === 1 ? "day" : "days"} ago`;
+  const diffWeek = Math.floor(diffDay / 7);
+  if (diffWeek < 4) return `${diffWeek} ${diffWeek === 1 ? "week" : "weeks"} ago`;
+  const diffMonth = Math.floor(diffDay / 30);
+  if (diffMonth < 12) return `${diffMonth} ${diffMonth === 1 ? "month" : "months"} ago`;
+  const diffYear = Math.floor(diffDay / 365);
+  return `${diffYear} ${diffYear === 1 ? "year" : "years"} ago`;
+}
+
+/**
  * Truncates text cleanly with ellipsis
  */
 export function truncateText(text?: string, maxLen: number = 280): string {
