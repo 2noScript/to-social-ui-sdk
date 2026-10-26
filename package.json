@@ -1,0 +1,38 @@
+{
+  "name": "to-social-ui-sdk",
+  "version": "1.0.0",
+  "description": "High-performance Node.js & Bun SDK that transforms social media DTOs (Facebook, TikTok, Douyin, YouTube, Bilibili) into pixel-perfect UI images (PNG, Buffer, SVG) via Satori and Resvg.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir ./dist --target node --format esm",
+    "test": "bun test",
+    "test:facebook": "bun test ./tests/facebook",
+    "test:tiktok": "bun test ./tests/tiktok",
+    "test:youtube": "bun test ./tests/youtube",
+    "test:bilibili": "bun test ./tests/bilibili",
+    "test:profile": "bun test ./tests/profile"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.13.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.1",
+    "satori": "^0.63.2"
+  }
+}
