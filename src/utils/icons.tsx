@@ -229,42 +229,54 @@ export function FbFeedShareIcon({ size = 20, color = "currentColor" }: { size?: 
 
 
 // ============================================================================
-// 3. TIKTOK & DOUYIN
+// 3. TIKTOK & DOUYIN (Official SVGs from TikTok Web & Mobile Application)
 // ============================================================================
 
-export function TikTokHeartIcon({ size = 20, fill = "#FE2C55" }: { size?: number; fill?: string }) {
+export function TikTokHeartIcon({ size = 28, fill = "#ffffff" }: { size?: number; fill?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    <svg width={size} height={size} viewBox="0 0 48 48" fill={fill}>
+      <path d="M24 9.44c3.2-4.03 7.61-5.56 12-4.67 2.31.47 5.59 2.28 7.75 5.48 2.26 3.32 3.21 7.99.98 13.85-1.75 4.57-5.5 8.83-9.28 12.2a56.6 56.6 0 0 1-10.52 7.47l-.93.49-.93-.49a56.6 56.6 0 0 1-10.52-7.47c-3.78-3.37-7.53-7.63-9.28-12.2-2.24-5.86-1.28-10.53.98-13.85C6.4 7.05 9.69 5.24 12 4.77c4.39-.9 8.8.64 12 4.67Z" />
     </svg>
   );
 }
 
-export function TikTokCommentIcon({ size = 20, fill = "#ffffff" }: { size?: number; fill?: string }) {
+export function TikTokCommentIcon({ size = 28, fill = "#ffffff" }: { size?: number; fill?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
-      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z" />
+    <svg width={size} height={size} viewBox="0 0 48 48" fill={fill}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2 21.5c0-10.22 9.88-18 22-18s22 7.78 22 18c0 5.63-3.19 10.74-7.32 14.8a43.55 43.55 0 0 1-14.14 9.1A1.5 1.5 0 0 1 22.5 44v-5.04C11.13 38.4 2 31.34 2 21.5ZM14 25a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm13-3a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+      />
     </svg>
   );
 }
 
-export function TikTokBookmarkIcon({ size = 20, fill = "#FACD3D" }: { size?: number; fill?: string }) {
+export function TikTokBookmarkIcon({ size = 28, fill = "#FACE15" }: { size?: number; fill?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
-      <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+    <svg width={size} height={size} viewBox="0 0 48 48" fill={fill}>
+      <path d="M13 4a5 5 0 0 0-5 5v32.8a2 2 0 0 0 3.26 1.55l12.1-9.84a1 1 0 0 1 1.27 0l12.1 9.84A2 2 0 0 0 40 41.8V9a5 5 0 0 0-5-5H13Z" />
     </svg>
   );
 }
 
-export function TikTokShareIcon({ size = 20, fill = "#ffffff" }: { size?: number; fill?: string }) {
+export function TikTokShareIcon({ size = 28, fill = "#ffffff" }: { size?: number; fill?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
-      <path d="M10 9V5l7 7-7 7v-4.1c-5 0-8.5 1.6-11 5.1 1-5 4-10 11-11z" />
+    <svg width={size} height={size} viewBox="0 0 48 48" fill={fill}>
+      <path d="M23.82 3.5A2 2 0 0 0 20.5 5v10.06C8.7 15.96 1 25.32 1 37a2 2 0 0 0 3.41 1.41c4.14-4.13 10.4-5.6 16.09-5.88v9.97a2 2 0 0 0 3.3 1.52l21.5-18.5a2 2 0 0 0 .02-3.02z" />
     </svg>
   );
 }
 
-export function MusicNoteIcon({ size = 16, fill = "#ffffff" }: { size?: number; fill?: string }) {
+export function TikTokPlusIcon({ size = 12, fill = "#ffffff" }: { size?: number; fill?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill={fill}>
+      <path d="M22 4a1 1 0 0 0-1 1v16H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h16v16a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V27h16a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H27V5a1 1 0 0 0-1-1h-4Z" />
+    </svg>
+  );
+}
+
+export function MusicNoteIcon({ size = 14, fill = "#ffffff" }: { size?: number; fill?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
       <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />

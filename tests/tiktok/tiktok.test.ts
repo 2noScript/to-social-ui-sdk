@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, test } from "bun:test";
-import { renderPost, renderComment } from "../../src/index";
+import { renderPost, renderComment, renderCommentThread } from "../../src/index";
 import type { UnifiedContent, UnifiedComment } from "../../src/types";
 
 const OUT_DIR = path.resolve("./output/tiktok");
@@ -90,4 +90,57 @@ describe("🎵 TikTok UI Templates", () => {
     await res.saveToFile(outPath);
     expect(fs.existsSync(outPath)).toBe(true);
   });
+
+  test("renders TikTok Comment Thread Drawer and saves to output/tiktok", async () => {
+    const threadComments: UnifiedComment[] = [
+      {
+        id: "tt_c1",
+        contentId: "7689468618823847189",
+        text: "Tried this recipe this morning and it literally changed my life! So fluffy!! 👏",
+        author: {
+          id: "foodie_sarah",
+          name: "Sarah Baker",
+          uniqueId: "sarah_bakes",
+          avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
+        },
+        isAuthorLiked: true,
+        likes: 12400,
+        timestamp: Date.now() - 4 * 3600 * 1000,
+        replies: [
+          {
+            id: "tt_r1",
+            contentId: "7689468618823847189",
+            text: "Well done! Keep cooking 🔥",
+            author: { id: "gordonramsay", name: "Gordon Ramsay", isAuthor: true },
+            likes: 5400,
+            timestamp: Date.now() - 2 * 3600 * 1000,
+          },
+        ],
+      },
+      {
+        id: "tt_c2",
+        contentId: "7689468618823847189",
+        text: "The trick with cold butter cubes at the start makes all the difference! 🧈",
+        author: {
+          id: "chef_mark",
+          name: "Mark Culinary",
+          uniqueId: "mark_eats",
+          avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+        },
+        likes: 3120,
+        reactionType: "love",
+        timestamp: Date.now() - 6 * 3600 * 1000,
+      },
+    ];
+
+    const res = await renderCommentThread(threadComments, "TIKTOK", {
+      totalCount: 18400,
+      theme: "dark",
+    });
+    expect(res.png).toBeDefined();
+    const outPath = path.join(OUT_DIR, "tiktok_comment_thread.png");
+    await res.saveToFile(outPath);
+    expect(fs.existsSync(outPath)).toBe(true);
+  });
 });
+

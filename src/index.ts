@@ -256,3 +256,23 @@ export * from "./engine/fonts";
 export * from "./utils/format";
 export * from "./utils/image";
 export * from "./utils/icons";
+
+// Individual Platform Templates & Component Nodes
+export * from "./templates/facebook/FacebookPostCard";
+export * from "./templates/facebook/FacebookReelCard";
+export * from "./templates/facebook/FacebookCommentBubble";
+export * from "./templates/facebook/FacebookCommentThread";
+
+export * from "./templates/tiktok/TikTokVideoCard";
+export * from "./templates/tiktok/TikTokCommentRow";
+export * from "./templates/tiktok/TikTokCommentThread";
+
+export * from "./templates/youtube/YouTubeVideoCard";
+export * from "./templates/youtube/YouTubeShortsCard";
+export * from "./templates/youtube/YouTubeCommentThread";
+
+export * from "./templates/instagram/InstagramPostCard";
+export * from "./templates/twitter/TwitterTweetCard";
+export * from "./templates/bilibili/BilibiliVideoCard";
+export * from "./templates/profile/SocialProfileCard";
+export * from "./templates/common/SocialCommentThread";
