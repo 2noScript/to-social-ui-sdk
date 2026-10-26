@@ -13,6 +13,7 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
   const { content, options = {} } = props;
   const isDark = options.theme !== "light"; // Twitter default is dark
 
+  // Official X / Twitter Color Tokens
   const bg = isDark ? "#000000" : "#ffffff";
   const textPrimary = isDark ? "#e7e9ea" : "#0f1419";
   const textSecondary = isDark ? "#71767b" : "#536471";
@@ -25,7 +26,7 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
 
   const coverUrl = content.media?.coverUrl || content.media?.images?.[0]?.url;
   const coverUri = coverUrl && options.prefetchImages !== false
-    ? await resolveImageAsDataUri(coverUrl, () => createPlaceholderCover(content.title, 500, 280))
+    ? await resolveImageAsDataUri(coverUrl, () => createPlaceholderCover(content.title, 526, 290))
     : (coverUrl ? coverUrl : undefined);
 
   const authorName = content.author?.name || "Twitter User";
@@ -46,11 +47,10 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
         width: 560,
         backgroundColor: bg,
         color: textPrimary,
-        borderRadius: 20,
-        padding: 20,
+        borderRadius: 16,
+        padding: "16px 18px",
         border: `1px solid ${border}`,
-        fontFamily: "Inter, sans-serif",
-        boxShadow: "0 8px 30px rgba(0,0,0,0.2)",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
         boxSizing: "border-box",
       }}
     >
@@ -59,58 +59,60 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 12,
+          alignItems: "flex-start",
+          marginBottom: 10,
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
+          {/* Avatar: 40px circle */}
           <img
             src={avatarUri}
-            width={44}
-            height={44}
-            style={{ borderRadius: 22, objectFit: "cover", marginRight: 12 }}
+            width={40}
+            height={40}
+            style={{ borderRadius: 20, objectFit: "cover", marginRight: 10 }}
           />
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <span style={{ fontWeight: 700, fontSize: 16, color: textPrimary, marginRight: 4 }}>
+            <div style={{ display: "flex", alignItems: "center", lineHeight: "1.2" }}>
+              <span style={{ fontWeight: 700, fontSize: 15, color: textPrimary, marginRight: 4 }}>
                 {authorName}
               </span>
-              {content.author?.isVerified && <VerifiedBadge size={16} color={linkColor} />}
+              {content.author?.isVerified && <VerifiedBadge size={15} color={linkColor} />}
             </div>
-            <span style={{ fontSize: 14, color: textSecondary }}>
+            <span style={{ fontSize: 14, color: textSecondary, marginTop: 1 }}>
               {authorHandle}
             </span>
           </div>
         </div>
 
         {/* X Logo */}
-        <TwitterXLogo size={20} color={textPrimary} />
+        <TwitterXLogo size={18} color={textPrimary} />
       </div>
 
-      {/* 2. Tweet Text */}
+      {/* 2. Tweet Text (15px, 20px line-height) */}
       {textBody ? (
         <div
           style={{
-            fontSize: 16,
-            lineHeight: 1.5,
+            fontSize: 15,
+            lineHeight: "20px",
             color: textPrimary,
-            marginBottom: coverUri ? 12 : 16,
+            marginBottom: coverUri ? 12 : 14,
+            wordBreak: "break-word",
           }}
         >
           {textBody}
         </div>
       ) : null}
 
-      {/* 3. Media Preview (if available) */}
+      {/* 3. Media Preview (if available) - 16px border-radius */}
       {coverUri ? (
         <div
           style={{
             display: "flex",
             width: "100%",
-            height: 280,
+            height: 290,
             borderRadius: 16,
             overflow: "hidden",
-            marginBottom: 14,
+            marginBottom: 12,
             border: `1px solid ${border}`,
           }}
         >
@@ -126,7 +128,7 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
         style={{
           display: "flex",
           alignItems: "center",
-          fontSize: 13,
+          fontSize: 14,
           color: textSecondary,
           paddingBottom: 12,
           borderBottom: `1px solid ${border}`,
@@ -134,7 +136,7 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
         }}
       >
         <span>{timeStr}</span>
-        <span style={{ margin: "0 6px" }}>•</span>
+        <span style={{ margin: "0 6px" }}>·</span>
         <span style={{ color: textPrimary, fontWeight: 700 }}>Twitter for Web</span>
       </div>
 
@@ -146,13 +148,14 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
           alignItems: "center",
           color: textSecondary,
           fontSize: 13,
-          fontWeight: 600,
+          fontWeight: 400,
+          padding: "0 6px",
         }}
       >
         {/* Reply */}
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ marginRight: 6 }}>
-            <TwitterReplyIcon size={16} color={textSecondary} />
+            <TwitterReplyIcon size={18} color={textSecondary} />
           </div>
           <span>{formatSocialCount(repliesCount)}</span>
         </div>
@@ -160,7 +163,7 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
         {/* Repost */}
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ marginRight: 6 }}>
-            <TwitterRepostIcon size={16} color={textSecondary} />
+            <TwitterRepostIcon size={18} color={textSecondary} />
           </div>
           <span>{formatSocialCount(repostsCount)}</span>
         </div>
@@ -168,7 +171,7 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
         {/* Like */}
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ marginRight: 6 }}>
-            <TwitterLikeIcon size={16} color={textSecondary} />
+            <TwitterLikeIcon size={18} color={textSecondary} />
           </div>
           <span>{formatSocialCount(likesCount)}</span>
         </div>
@@ -176,7 +179,7 @@ export async function createTwitterTweetCardNode(props: TwitterTweetCardProps) {
         {/* Views */}
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ marginRight: 6 }}>
-            <TwitterViewIcon size={16} color={textSecondary} />
+            <TwitterViewIcon size={18} color={textSecondary} />
           </div>
           <span>{formatSocialCount(viewsCount > 0 ? viewsCount : 12400)}</span>
         </div>

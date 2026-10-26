@@ -13,6 +13,7 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
   const { content, options = {} } = props;
   const isDark = options.theme === "dark";
 
+  // Official Instagram Web / App Color Tokens
   const bg = isDark ? "#000000" : "#ffffff";
   const textPrimary = isDark ? "#F5F5F5" : "#262626";
   const textSecondary = isDark ? "#A8A8A8" : "#8E8E8E";
@@ -28,7 +29,6 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
     : (coverUrl ? coverUrl : createPlaceholderCover(content.title, 540, 540));
 
   const authorHandle = content.author?.uniqueId || content.author?.name?.toLowerCase().replace(/\s+/g, "_") || "instagram_user";
-  const authorName = content.author?.name || authorHandle;
   const caption = content.description || content.title || "";
   const likesCount = content.stats?.likes || 0;
   const commentsCount = content.stats?.comments || 0;
@@ -42,11 +42,10 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
         width: 540,
         backgroundColor: bg,
         color: textPrimary,
-        borderRadius: 20,
+        borderRadius: 12,
         overflow: "hidden",
         border: `1px solid ${border}`,
-        fontFamily: "Inter, sans-serif",
-        boxShadow: "0 8px 28px rgba(0,0,0,0.15)",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
         boxSizing: "border-box",
       }}
     >
@@ -56,7 +55,7 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "14px 16px",
+          padding: "10px 14px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -66,9 +65,9 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              width: 44,
-              height: 44,
-              borderRadius: 22,
+              width: 38,
+              height: 38,
+              borderRadius: 19,
               backgroundImage: "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
               marginRight: 10,
               padding: 2,
@@ -76,10 +75,10 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
           >
             <img
               src={avatarUri}
-              width={38}
-              height={38}
+              width={32}
+              height={32}
               style={{
-                borderRadius: 19,
+                borderRadius: 16,
                 objectFit: "cover",
                 border: `2px solid ${bg}`,
               }}
@@ -88,7 +87,7 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
 
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <span style={{ fontWeight: 700, fontSize: 14, color: textPrimary, marginRight: 4 }}>
+              <span style={{ fontWeight: 600, fontSize: 14, color: textPrimary, marginRight: 4 }}>
                 {authorHandle}
               </span>
               {content.author?.isVerified && <VerifiedBadge size={13} color="#0095F6" />}
@@ -98,18 +97,18 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
         </div>
 
         {/* 3 dots */}
-        <div style={{ display: "flex", color: textPrimary, fontSize: 18, fontWeight: 700 }}>
+        <div style={{ display: "flex", color: textPrimary, fontSize: 16, fontWeight: 700, padding: "0 4px" }}>
           •••
         </div>
       </div>
 
-      {/* 2. Post Media (Square 1:1 or 4:5 image) */}
+      {/* 2. Post Media (Edge-to-Edge Full Width, 540x500) */}
       <div
         style={{
           display: "flex",
           width: 540,
-          height: 460,
-          backgroundColor: "#000",
+          height: 500,
+          backgroundColor: "#000000",
           overflow: "hidden",
         }}
       >
@@ -125,7 +124,7 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "12px 16px 8px 16px",
+          padding: "10px 14px 6px 14px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -146,15 +145,15 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
       </div>
 
       {/* 4. Likes & Caption */}
-      <div style={{ display: "flex", flexDirection: "column", padding: "0 16px 16px 16px" }}>
+      <div style={{ display: "flex", flexDirection: "column", padding: "0 14px 14px 14px" }}>
         {/* Likes Count */}
-        <div style={{ fontWeight: 700, fontSize: 14, color: textPrimary, marginBottom: 6 }}>
+        <div style={{ fontWeight: 700, fontSize: 14, color: textPrimary, marginBottom: 4 }}>
           {formatSocialCount(likesCount)} likes
         </div>
 
         {/* Caption */}
         {caption ? (
-          <div style={{ fontSize: 14, lineHeight: 1.45, color: textPrimary, marginBottom: 6 }}>
+          <div style={{ fontSize: 14, lineHeight: "19px", color: textPrimary, marginBottom: 4 }}>
             <span style={{ fontWeight: 700, marginRight: 6 }}>{authorHandle}</span>
             <span>{caption}</span>
           </div>
@@ -162,13 +161,13 @@ export async function createInstagramPostCardNode(props: InstagramPostCardProps)
 
         {/* View all comments */}
         {commentsCount > 0 ? (
-          <div style={{ fontSize: 13, color: textSecondary, marginBottom: 4 }}>
+          <div style={{ fontSize: 14, color: textSecondary, marginBottom: 4 }}>
             View all {formatSocialCount(commentsCount)} comments
           </div>
         ) : null}
 
         {/* Time */}
-        <div style={{ fontSize: 11, color: textSecondary, textTransform: "uppercase" }}>
+        <div style={{ fontSize: 11, color: textSecondary, textTransform: "uppercase", letterSpacing: 0.2 }}>
           {timeStr}
         </div>
       </div>

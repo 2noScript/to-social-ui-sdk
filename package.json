@@ -21,6 +21,7 @@
     "test:youtube": "bun test ./tests/youtube",
     "test:instagram": "bun test ./tests/instagram",
     "test:twitter": "bun test ./tests/twitter",
+    "test:reactions": "bun test ./tests/reactions",
     "test:bilibili": "bun test ./tests/bilibili",
     "test:profile": "bun test ./tests/profile"
   },

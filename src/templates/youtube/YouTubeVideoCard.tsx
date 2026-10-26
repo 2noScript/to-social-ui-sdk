@@ -1,8 +1,8 @@
 import React from "react";
 import type { UnifiedContent, RenderOptions } from "../../types";
 import { formatDuration, formatSocialCount, formatSocialTime } from "../../utils/format";
-import { YouTubePlayIcon } from "../../utils/icons";
 import { resolveImageAsDataUri, createPlaceholderAvatar, createPlaceholderCover } from "../../utils/image";
+import { VerifiedBadge } from "../../utils/icons";
 
 export interface YouTubeVideoCardProps {
   content: UnifiedContent;
@@ -29,7 +29,7 @@ export async function createYouTubeVideoCardNode(props: YouTubeVideoCardProps) {
   const authorName = content.author?.name || "YouTube Creator";
   const viewsStr = `${formatSocialCount(content.stats?.views || content.stats?.likes || 0)} views`;
   const timeStr = formatSocialTime(content.publishedAt, content.timestamp);
-  const durationStr = content.media?.video?.durationSec ? formatDuration(content.media.video.durationSec) : "HD";
+  const durationStr = content.media?.video?.durationSec ? formatDuration(content.media.video.durationSec) : "12:34";
 
   return (
     <div
@@ -37,25 +37,24 @@ export async function createYouTubeVideoCardNode(props: YouTubeVideoCardProps) {
         display: "flex",
         flexDirection: "column",
         backgroundColor: bg,
-        borderRadius: 20,
-        padding: 18,
-        fontFamily: "Inter, sans-serif",
-        boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-        width: "100%",
+        borderRadius: 16,
+        padding: "14px 16px",
+        fontFamily: "Roboto, 'YouTube Noto', system-ui, -apple-system, sans-serif",
+        width: 592,
         boxSizing: "border-box",
       }}
     >
-      {/* 1. Thumbnail Container (16:9) */}
+      {/* 1. Thumbnail Container (16:9, exact YouTube 12px border-radius) */}
       <div
         style={{
           display: "flex",
           position: "relative",
-          width: "100%",
+          width: 560,
           height: 315,
-          borderRadius: 14,
+          borderRadius: 12,
           overflow: "hidden",
-          backgroundColor: "#000",
-          marginBottom: 14,
+          backgroundColor: "#000000",
+          marginBottom: 12,
         }}
       >
         <img
@@ -67,48 +66,34 @@ export async function createYouTubeVideoCardNode(props: YouTubeVideoCardProps) {
           }}
         />
 
-        {/* Duration badge bottom-right */}
+        {/* Real YouTube duration badge: bottom-right, black with 0.8 opacity, 4px border-radius */}
         <div
           style={{
             position: "absolute",
-            bottom: 10,
-            right: 10,
-            backgroundColor: "rgba(0,0,0,0.85)",
+            bottom: 8,
+            right: 8,
+            backgroundColor: "rgba(0,0,0,0.8)",
             color: "#ffffff",
             fontSize: 12,
-            fontWeight: 700,
-            padding: "3px 6px",
+            fontWeight: 500,
+            letterSpacing: 0.5,
+            padding: "3px 5px",
             borderRadius: 4,
           }}
         >
           {durationStr}
         </div>
-
-        {/* Small YouTube Play watermark top-left */}
-        <div
-          style={{
-            position: "absolute",
-            top: 10,
-            left: 10,
-            display: "flex",
-            alignItems: "center",
-            backgroundColor: "rgba(0,0,0,0.6)",
-            padding: "4px 8px",
-            borderRadius: 6,
-          }}
-        >
-          <YouTubePlayIcon size={18} fill="#FF0000" />
-        </div>
       </div>
 
       {/* 2. Channel Avatar + Title + Metadata */}
-      <div style={{ display: "flex", alignItems: "flex-start", width: "100%" }}>
+      <div style={{ display: "flex", alignItems: "flex-start", width: 560 }}>
+        {/* Channel Avatar: 36px circle */}
         <img
           src={avatarUri}
-          width={40}
-          height={40}
+          width={36}
+          height={36}
           style={{
-            borderRadius: 20,
+            borderRadius: 18,
             objectFit: "cover",
             marginRight: 12,
             marginTop: 2,
@@ -117,32 +102,37 @@ export async function createYouTubeVideoCardNode(props: YouTubeVideoCardProps) {
         />
 
         <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          {/* Title: 16px, 600 weight, 22px line-height */}
           <div
             style={{
               fontSize: 16,
-              fontWeight: 700,
-              lineHeight: 1.35,
+              fontWeight: 600,
+              lineHeight: "22px",
               color: textPrimary,
               marginBottom: 4,
+              wordBreak: "break-word",
             }}
           >
-            {content.title || content.description || "YouTube Video"}
+            {content.title || content.description}
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", fontSize: 13, color: textSecondary, marginBottom: 2 }}>
+          {/* Channel Name with Verified Checkmark */}
+          <div style={{ display: "flex", alignItems: "center", fontSize: 14, color: textSecondary, marginBottom: 2 }}>
             <span style={{ marginRight: 4 }}>{authorName}</span>
-            {content.author?.isVerified && (
-              <svg width={14} height={14} viewBox="0 0 24 24" fill={textSecondary} style={{ marginRight: 4 }}>
-                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.8 14.5l-4.2-4.2 1.4-1.4 2.8 2.8 6.8-6.8 1.4 1.4-8.2 8.2z" />
-              </svg>
-            )}
+            {content.author?.isVerified && <VerifiedBadge size={14} color="#AAAAAA" />}
           </div>
 
-          <div style={{ fontSize: 13, color: textSecondary }}>
+          {/* Views & Date */}
+          <div style={{ fontSize: 14, color: textSecondary }}>
             <span>{viewsStr}</span>
             <span style={{ margin: "0 4px" }}>•</span>
             <span>{timeStr}</span>
           </div>
+        </div>
+
+        {/* 3 Dots Menu Button */}
+        <div style={{ display: "flex", color: textSecondary, fontSize: 16, paddingLeft: 8 }}>
+          ⋮
         </div>
       </div>
     </div>

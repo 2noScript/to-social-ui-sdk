@@ -13,14 +13,15 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
   const { comment, options = {} } = props;
   const isDark = options.theme !== "light";
 
+  // Official YouTube Color Tokens
   const bg = isDark ? "#0f0f0f" : "#ffffff";
   const textPrimary = isDark ? "#f1f1f1" : "#0f0f0f";
   const textSecondary = isDark ? "#aaaaaa" : "#606060";
-  const badgeBg = isDark ? "#272727" : "#f2f2f2";
+  const authorBadgeBg = isDark ? "#272727" : "#f2f2f2";
 
   const avatarUri = options.prefetchImages !== false
-    ? await resolveImageAsDataUri(comment.author?.avatarUrl, () => createPlaceholderAvatar(comment.author?.name, 72, "#FF0000"))
-    : (comment.author?.avatarUrl || createPlaceholderAvatar(comment.author?.name, 72, "#FF0000"));
+    ? await resolveImageAsDataUri(comment.author?.avatarUrl, () => createPlaceholderAvatar(comment.author?.name, 80, "#FF0000"))
+    : (comment.author?.avatarUrl || createPlaceholderAvatar(comment.author?.name, 80, "#FF0000"));
 
   const authorHandle = comment.author?.uniqueId ? `@${comment.author.uniqueId}` : `@${comment.author?.name || "youtube_user"}`;
   const timeStr = formatSocialTime(comment.publishedAt, comment.timestamp);
@@ -32,11 +33,10 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
         display: "flex",
         flexDirection: "column",
         backgroundColor: bg,
-        borderRadius: 16,
-        padding: "16px 20px",
-        fontFamily: "Inter, sans-serif",
-        boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
-        width: "100%",
+        borderRadius: 12,
+        padding: "14px 16px",
+        fontFamily: "Roboto, 'YouTube Noto', system-ui, -apple-system, sans-serif",
+        width: 580,
         boxSizing: "border-box",
       }}
     >
@@ -47,18 +47,19 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
             display: "flex",
             alignItems: "center",
             fontSize: 12,
-            fontWeight: 600,
+            fontWeight: 500,
             color: textSecondary,
             marginBottom: 8,
-            marginLeft: 54,
+            marginLeft: 52,
           }}
         >
-          <PinIcon size={13} color={textSecondary} />
+          <PinIcon size={12} color={textSecondary} />
           <span style={{ marginLeft: 6 }}>Pinned by creator</span>
         </div>
       )}
 
       <div style={{ display: "flex", alignItems: "flex-start", width: "100%" }}>
+        {/* Channel Avatar: 40px circle */}
         <img
           src={avatarUri}
           width={40}
@@ -66,19 +67,19 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
           style={{
             borderRadius: 20,
             objectFit: "cover",
-            marginRight: 14,
+            marginRight: 12,
             flexShrink: 0,
           }}
         />
 
         <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-          <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
+          <div style={{ display: "flex", alignItems: "center", marginBottom: 3 }}>
             <span
               style={{
                 fontSize: 13,
-                fontWeight: 700,
-                color: comment.author?.isAuthor ? "#ffffff" : textPrimary,
-                backgroundColor: comment.author?.isAuthor ? "#888888" : "transparent",
+                fontWeight: 500,
+                color: comment.author?.isAuthor ? textPrimary : textPrimary,
+                backgroundColor: comment.author?.isAuthor ? authorBadgeBg : "transparent",
                 padding: comment.author?.isAuthor ? "1px 6px" : "0",
                 borderRadius: comment.author?.isAuthor ? 10 : 0,
                 marginRight: 6,
@@ -89,22 +90,33 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
             <span style={{ fontSize: 12, color: textSecondary }}>{timeStr}</span>
           </div>
 
-          <div style={{ fontSize: 14, lineHeight: 1.45, color: textPrimary, marginBottom: 8, wordBreak: "break-word" }}>
+          <div
+            style={{
+              fontSize: 14,
+              lineHeight: "20px",
+              color: textPrimary,
+              marginBottom: 8,
+              wordBreak: "break-word",
+            }}
+          >
             {comment.text}
           </div>
 
+          {/* Action Row: Thumbs Up • Thumbs Down • Heart • Reply */}
           <div style={{ display: "flex", alignItems: "center", fontSize: 12, color: textSecondary }}>
             {/* Thumbs up */}
             <div style={{ display: "flex", alignItems: "center", marginRight: 16 }}>
-              <div style={{ marginRight: 5 }}>
-                <YouTubeLikeIcon size={14} fill={textSecondary} />
+              <div style={{ marginRight: 6 }}>
+                <YouTubeLikeIcon size={16} fill={textSecondary} />
               </div>
-              <span>{formatSocialCount(likesCount)}</span>
+              <span style={{ fontSize: 12, color: textSecondary }}>
+                {likesCount > 0 ? formatSocialCount(likesCount) : ""}
+              </span>
             </div>
 
             {/* Thumbs down */}
             <div style={{ display: "flex", alignItems: "center", marginRight: 16 }}>
-              <YouTubeDislikeIcon size={14} fill={textSecondary} />
+              <YouTubeDislikeIcon size={16} fill={textSecondary} />
             </div>
 
             {/* Creator Heart */}
@@ -115,35 +127,35 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
             )}
 
             {/* Reply */}
-            <span style={{ fontWeight: 600 }}>Reply</span>
+            <span style={{ fontWeight: 500, fontSize: 12, color: textPrimary }}>Reply</span>
           </div>
         </div>
       </div>
 
       {/* Replies */}
       {comment.replies && comment.replies.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "column", marginLeft: 54, marginTop: 12 }}>
-          <div style={{ display: "flex", alignItems: "center", color: "#3EA6FF", fontSize: 13, fontWeight: 700, marginBottom: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", marginLeft: 52, marginTop: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", color: "#3EA6FF", fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
             ▼ {comment.replies.length} replies
           </div>
-          {comment.replies.slice(0, 2).map((r, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "flex-start", marginTop: 6 }}>
+          {comment.replies.map((r, i) => (
+            <div key={r.id || i} style={{ display: "flex", alignItems: "flex-start", marginTop: 8 }}>
               <img
                 src={createPlaceholderAvatar(r.author?.name, 48, "#FF0000")}
-                width={26}
-                height={26}
-                style={{ borderRadius: 13, marginRight: 10 }}
+                width={24}
+                height={24}
+                style={{ borderRadius: 12, marginRight: 10, flexShrink: 0 }}
               />
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: textPrimary, marginRight: 6 }}>
+                  <span style={{ fontSize: 13, fontWeight: 500, color: textPrimary, marginRight: 6 }}>
                     {r.author?.name || r.author?.uniqueId || "User"}
                   </span>
-                  <span style={{ fontSize: 11, color: textSecondary }}>
+                  <span style={{ fontSize: 12, color: textSecondary }}>
                     {formatSocialTime(r.publishedAt, r.timestamp)}
                   </span>
                 </div>
-                <span style={{ fontSize: 13, color: textPrimary, marginTop: 2 }}>{r.text}</span>
+                <span style={{ fontSize: 14, color: textPrimary, marginTop: 2, lineHeight: "20px" }}>{r.text}</span>
               </div>
             </div>
           ))}

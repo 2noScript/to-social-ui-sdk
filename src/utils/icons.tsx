@@ -1,4 +1,13 @@
 import React from "react";
+import {
+  FB_LIKE_DATA_URI,
+  FB_LOVE_DATA_URI,
+  FB_CARE_DATA_URI,
+  FB_HAHA_DATA_URI,
+  FB_WOW_DATA_URI,
+  FB_SAD_DATA_URI,
+  FB_ANGRY_DATA_URI,
+} from "./facebookReactions";
 
 // ============================================================================
 // 1. VERIFIED BADGES & SYSTEM
@@ -31,113 +40,87 @@ export function PinIcon({ size = 14, color = "#B0B3B8" }: { size?: number; color
 }
 
 // ============================================================================
-// 2. FACEBOOK 7 REACTIONS PACK (Vector-grade Emoticons)
+// 2. FACEBOOK 7 REACTIONS PACK (Official 100% Meta 3D Assets)
 // ============================================================================
 
-export function FbLikeIcon({ size = 18 }: { size?: number }) {
+export function FbLikeIcon({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="12" fill="#1877F2" />
-      <path
-        d="M7 11.5V17.5H9.5V11.5H7ZM16.5 12C16.5 11.4 16 11 15.3 11H12.8L13.2 8.5C13.2 7.7 12.6 7 11.8 7L10 10.3V17.5H15.5C16.1 17.5 16.5 17 16.5 16.4C16.5 16 16.3 15.7 16.1 15.5C16.6 15.2 16.9 14.7 16.8 14.1C17.1 13.8 17.2 13.3 17 12.8C16.7 12.3 16.6 12.1 16.5 12Z"
-        fill="white"
-      />
-    </svg>
+    <img
+      src={FB_LIKE_DATA_URI}
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "cover", flexShrink: 0 }}
+    />
   );
 }
 
-export function FbLoveIcon({ size = 18 }: { size?: number }) {
+export function FbLoveIcon({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="12" fill="#FA3E3E" />
-      <path
-        d="M12 17.5L6.8 12.3C5.7 11.2 5.7 9.5 6.8 8.4C7.9 7.3 9.6 7.3 10.7 8.4L12 9.7L13.3 8.4C14.4 7.3 16.1 7.3 17.2 8.4C18.3 9.5 18.3 11.2 17.2 12.3L12 17.5Z"
-        fill="white"
-      />
-    </svg>
+    <img
+      src={FB_LOVE_DATA_URI}
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "cover", flexShrink: 0 }}
+    />
   );
 }
 
-export function FbCareIcon({ size = 18 }: { size?: number }) {
+export function FbCareIcon({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="12" fill="#F7B125" />
-      {/* Smiling eyes */}
-      <circle cx="8" cy="9.5" r="1.3" fill="#4C3400" />
-      <circle cx="16" cy="9.5" r="1.3" fill="#4C3400" />
-      {/* Smiling mouth */}
-      <path d="M9 13.5C10 15 14 15 15 13.5" stroke="#4C3400" strokeWidth="1.6" strokeLinecap="round" />
-      {/* Hugging heart */}
-      <path
-        d="M12 18.5L9.5 16C8.8 15.3 8.8 14.2 9.5 13.5C10.2 12.8 11.3 12.8 12 13.5L12 13.7L12 13.5C12.7 12.8 13.8 12.8 14.5 13.5C15.2 14.2 15.2 15.3 14.5 16L12 18.5Z"
-        fill="#FA3E3E"
-      />
-    </svg>
+    <img
+      src={FB_CARE_DATA_URI}
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "cover", flexShrink: 0 }}
+    />
   );
 }
 
-export function FbHahaIcon({ size = 18 }: { size?: number }) {
+export function FbHahaIcon({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="12" fill="#F7B125" />
-      {/* Closed happy eyes ^ ^ */}
-      <path d="M6.5 9.5L8.5 7.5L10.5 9.5" stroke="#4C3400" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M13.5 9.5L15.5 7.5L17.5 9.5" stroke="#4C3400" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      {/* Big laughing mouth */}
-      <path d="M7 13.5C7 16.5 17 16.5 17 13.5Z" fill="#800000" />
-      <path d="M8.5 13.5C8.5 15 15.5 15 15.5 13.5Z" fill="#FFFFFF" />
-    </svg>
+    <img
+      src={FB_HAHA_DATA_URI}
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "cover", flexShrink: 0 }}
+    />
   );
 }
 
-export function FbWowIcon({ size = 18 }: { size?: number }) {
+export function FbWowIcon({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="12" fill="#F7B125" />
-      {/* Eyebrows */}
-      <path d="M6.5 7C7.5 6 9.5 6 10.5 7" stroke="#4C3400" strokeWidth="1.3" strokeLinecap="round" />
-      <path d="M13.5 7C14.5 6 16.5 6 17.5 7" stroke="#4C3400" strokeWidth="1.3" strokeLinecap="round" />
-      {/* Eyes */}
-      <circle cx="8.5" cy="10" r="1.5" fill="#4C3400" />
-      <circle cx="15.5" cy="10" r="1.5" fill="#4C3400" />
-      {/* Round wow mouth */}
-      <ellipse cx="12" cy="15.5" rx="3" ry="4" fill="#4C3400" />
-    </svg>
+    <img
+      src={FB_WOW_DATA_URI}
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "cover", flexShrink: 0 }}
+    />
   );
 }
 
-export function FbSadIcon({ size = 18 }: { size?: number }) {
+export function FbSadIcon({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="12" fill="#F7B125" />
-      {/* Sad eyes */}
-      <circle cx="8" cy="10" r="1.4" fill="#4C3400" />
-      <circle cx="16" cy="10" r="1.4" fill="#4C3400" />
-      {/* Downward sad mouth */}
-      <path d="M8.5 16C9.5 14.5 14.5 14.5 15.5 16" stroke="#4C3400" strokeWidth="1.6" strokeLinecap="round" />
-      {/* Teardrop */}
-      <path d="M17.5 11.5C17.5 13 16.2 14.2 16.2 14.2C16.2 14.2 15 13 15 11.5C15 10.7 15.6 10 16.2 10C16.9 10 17.5 10.7 17.5 11.5Z" fill="#1877F2" />
-    </svg>
+    <img
+      src={FB_SAD_DATA_URI}
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "cover", flexShrink: 0 }}
+    />
   );
 }
 
-export function FbAngryIcon({ size = 18 }: { size?: number }) {
+export function FbAngryIcon({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="12" fill="#E84A36" />
-      {/* Angry slant eyebrows */}
-      <path d="M6 7.5L10 9.5" stroke="#4C0000" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M18 7.5L14 9.5" stroke="#4C0000" strokeWidth="1.8" strokeLinecap="round" />
-      {/* Eyes */}
-      <circle cx="8.5" cy="11.5" r="1.3" fill="#4C0000" />
-      <circle cx="15.5" cy="11.5" r="1.3" fill="#4C0000" />
-      {/* Angry frown mouth */}
-      <path d="M8.5 16C9.5 14.5 14.5 14.5 15.5 16" stroke="#4C0000" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
+    <img
+      src={FB_ANGRY_DATA_URI}
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "cover", flexShrink: 0 }}
+    />
   );
 }
 
-export function renderReactionIcon(type?: string, size = 18) {
+export function renderReactionIcon(type?: string, size = 20) {
   switch (type?.toLowerCase()) {
     case "love":
       return <FbLoveIcon size={size} />;
@@ -156,6 +139,94 @@ export function renderReactionIcon(type?: string, size = 18) {
       return <FbLikeIcon size={size} />;
   }
 }
+
+// Facebook Reels Specific Action Icons (White with Drop Shadow)
+export function FbReelsLikeIcon({ size = 28, fill = "#ffffff" }: { size?: number; fill?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
+      <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3v11z" />
+    </svg>
+  );
+}
+
+export function FbReelsCommentIcon({ size = 28, fill = "#ffffff" }: { size?: number; fill?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
+      <path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.84 7.08L5 22l4.24-1.42c.88.27 1.82.42 2.76.42 5.52 0 10-4.03 10-9s-4.48-9-10-9z" />
+    </svg>
+  );
+}
+
+export function FbReelsShareIcon({ size = 28, fill = "#ffffff" }: { size?: number; fill?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
+      <path d="M14 5v4C6.5 10 3.5 15 2 20c2.5-3.5 6-5.1 12-5.1V19l8-7-8-7z" />
+    </svg>
+  );
+}
+
+export function FbMoreDotsIcon({ size = 24, fill = "#ffffff" }: { size?: number; fill?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
+      <circle cx="5" cy="12" r="2.2" />
+      <circle cx="12" cy="12" r="2.2" />
+      <circle cx="19" cy="12" r="2.2" />
+    </svg>
+  );
+}
+
+export function FbReelsCameraIcon({ size = 22, color = "#ffffff" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+      <circle cx="12" cy="13" r="4" />
+    </svg>
+  );
+}
+
+export function FbReelsSearchIcon({ size = 22, color = "#ffffff" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+  );
+}
+
+export function FbChevronLeftIcon({ size = 24, color = "#ffffff" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  );
+}
+
+// Facebook Feed Post Action Bar Icons
+export function FbFeedLikeIcon({ size = 20, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3v11z" />
+    </svg>
+  );
+}
+
+export function FbFeedCommentIcon({ size = 20, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+  );
+}
+
+export function FbFeedShareIcon({ size = 20, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <path d="M13.5 6V2.5L21 10L13.5 17.5V14C8 14 4.5 16 2 20C3 14.5 6.5 9 13.5 8V6Z" />
+    </svg>
+  );
+}
+
+
 
 // ============================================================================
 // 3. TIKTOK & DOUYIN
@@ -202,7 +273,7 @@ export function MusicNoteIcon({ size = 16, fill = "#ffffff" }: { size?: number; 
 }
 
 // ============================================================================
-// 4. YOUTUBE & CREATOR BADGES
+// 4. YOUTUBE (Authentic SVGs from YouTube)
 // ============================================================================
 
 export function YouTubePlayIcon({ size = 24, fill = "#FF0000" }: { size?: number; fill?: string }) {
@@ -221,18 +292,18 @@ export function YouTubeShortsIcon({ size = 20, fill = "#FF0000" }: { size?: numb
   );
 }
 
-export function YouTubeLikeIcon({ size = 16, fill = "currentColor" }: { size?: number; fill?: string }) {
+export function YouTubeLikeIcon({ size = 18, fill = "currentColor" }: { size?: number; fill?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
-      <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" />
+      <path d="M9.221 1.795a1 1 0 011.109-.656l1.04.173a4 4 0 013.252 4.784L14 9h4.061a3.664 3.664 0 013.576 2.868A3.68 3.68 0 0121 14.85l.02.087A3.815 3.815 0 0120 18.5v.043l-.01.227a2.82 2.82 0 01-.135.663l-.106.282A3.754 3.754 0 0116.295 22h-3.606l-.392-.007a12.002 12.002 0 01-5.223-1.388l-.343-.189-.27-.154a2.005 2.005 0 00-.863-.26l-.13-.004H3.5a1.5 1.5 0 01-1.5-1.5V12.5A1.5 1.5 0 013.5 11h1.79l.157-.013a1 1 0 00.724-.512l.063-.145 2.987-8.535Zm-1.1 9.196A3 3 0 015.29 13H4v4.998h1.468a4 4 0 011.986.528l.27.155.285.157A10 10 0 0012.69 20h3.606c.754 0 1.424-.483 1.663-1.2l.03-.126a.819.819 0 00.012-.131v-.872l.587-.586c.388-.388.577-.927.523-1.465l-.038-.23-.02-.087-.21-.9.55-.744A1.663 1.663 0 0018.061 11H14a2.002 2.002 0 01-1.956-2.418l.623-2.904a2 2 0 00-1.626-2.392l-.21-.035-2.71 7.741Z" />
     </svg>
   );
 }
 
-export function YouTubeDislikeIcon({ size = 16, fill = "currentColor" }: { size?: number; fill?: string }) {
+export function YouTubeDislikeIcon({ size = 18, fill = "currentColor" }: { size?: number; fill?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={fill}>
-      <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z" />
+      <path d="m11.31 2 .392.007c1.824.06 3.61.534 5.223 1.388l.343.189.27.154c.264.152.56.24.863.26l.13.004H20.5a1.5 1.5 0 011.5 1.5V11.5a1.5 1.5 0 01-1.5 1.5h-1.79l-.158.013a1 1 0 00-.723.512l-.064.145-2.987 8.535a1 1 0 01-1.109.656l-1.04-.174a4 4 0 01-3.251-4.783L10 15H5.938a3.664 3.664 0 01-3.576-2.868A3.682 3.682 0 013 9.15l-.02-.088A3.816 3.816 0 014 5.5v-.043l.008-.227a2.86 2.86 0 01.136-.664l.107-.28A3.754 3.754 0 017.705 2h3.605ZM7.705 4c-.755 0-1.425.483-1.663 1.2l-.032.126a.818.818 0 00-.01.131v.872l-.587.586a1.816 1.816 0 00-.524 1.465l.038.23.02.087.21.9-.55.744a1.686 1.686 0 00-.321 1.18l.029.177c.17.76.844 1.302 1.623 1.302H10a2.002 2.002 0 011.956 2.419l-.623 2.904-.034.208a2.002 2.002 0 001.454 2.139l.206.045.21.035 2.708-7.741A3.001 3.001 0 0118.71 11H20V6.002h-1.47c-.696 0-1.38-.183-1.985-.528l-.27-.155-.285-.157A10.002 10.002 0 0011.31 4H7.705Z" />
     </svg>
   );
 }
@@ -315,26 +386,26 @@ export function InstagramBookmarkIcon({ size = 22, color = "currentColor" }: { s
 }
 
 // ============================================================================
-// 6. X (TWITTER)
+// 6. X (TWITTER) - Authentic SVGs from x.com
 // ============================================================================
 
 export function TwitterXLogo({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      <path d="m21.62 21.5-7.47-10.9 6.97-8.1H18.7l-5.62 6.54L8.6 2.5H2.48L9.68 13l-7.3 8.5H4.8l5.96-6.93 5.3 7z" />
     </svg>
   );
 }
 
-export function TwitterReplyIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
+export function TwitterReplyIcon({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      <path d="M1.75 10a8 8 0 0 1 8-8h4.37a8.13 8.13 0 0 1 3.93 15.24L10 21.7V18h-.07a8 8 0 0 1-8.18-8m2 0a6 6 0 0 0 6.14 6H12v2.3l5.09-2.8A6.13 6.13 0 0 0 14.12 4H9.75a6 6 0 0 0-6 6" />
     </svg>
   );
 }
 
-export function TwitterRepostIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
+export function TwitterRepostIcon({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
       <polyline points="17 1 21 5 17 9" />
@@ -345,15 +416,15 @@ export function TwitterRepostIcon({ size = 16, color = "currentColor" }: { size?
   );
 }
 
-export function TwitterLikeIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
+export function TwitterLikeIcon({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+      <path d="M17.06 3a5.7 5.7 0 0 1 4.81 3.16c.94 1.9.89 4.36-.54 6.98-1.42 2.61-4.2 5.4-8.83 8.09l-.5.29-.5-.3c-4.62-2.68-7.4-5.47-8.83-8.08S1.2 8.05 2.13 6.16a5.7 5.7 0 0 1 4.8-3.15c1.75-.09 3.56.6 5.07 2.15a6.6 6.6 0 0 1 5.06-2.15" />
     </svg>
   );
 }
 
-export function TwitterViewIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
+export function TwitterViewIcon({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}>
       <line x1="18" y1="20" x2="18" y2="10" />

@@ -8,11 +8,11 @@ const imageCache = new Map<string, string>();
 /**
  * Creates a clean SVG placeholder DataURI with initial letter or icon
  */
-export function createPlaceholderAvatar(name?: string, size: number = 80, bgColor: string = "#3b82f6"): string {
-  const initial = (name || "U").trim().charAt(0).toUpperCase() || "U";
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-    <rect width="${size}" height="${size}" rx="${size / 2}" fill="${bgColor}" />
-    <text x="50%" y="54%" font-family="Inter, -apple-system, sans-serif" font-size="${size * 0.45}" font-weight="bold" fill="#ffffff" dominant-baseline="middle" text-anchor="middle">${initial}</text>
+export function createPlaceholderAvatar(name?: string, size: number = 80, bgColor: string = "#65676B"): string {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24">
+    <rect width="24" height="24" rx="12" fill="${bgColor}" />
+    <circle cx="12" cy="8" r="4" fill="#ffffff" opacity="0.9" />
+    <path d="M4 20c0-3.8 3.6-5.8 8-5.8s8 2 8 5.8" fill="#ffffff" opacity="0.9" />
   </svg>`;
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
 }

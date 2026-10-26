@@ -17,11 +17,29 @@ export async function renderElementToImage(
     ? options.customFonts
     : getDefaultFonts();
 
-  // 1. Generate SVG via Satori
+  // 1. Generate SVG via Satori with emoji support
   const svg = await satori(element as any, {
     width,
     height,
     fonts: fonts as any,
+    loadAdditionalAsset: async (code: string, segment: string) => {
+      if (code === "emoji") {
+        try {
+          const hex = Array.from(segment)
+            .map((c) => c.codePointAt(0)!.toString(16))
+            .filter((c) => c !== "fe0f")
+            .join("-");
+          const res = await fetch(`https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/${hex}.svg`);
+          if (res.ok) {
+            const svgText = await res.text();
+            return `data:image/svg+xml;base64,${Buffer.from(svgText).toString("base64")}`;
+          }
+        } catch {
+          // Gracefully continue if network error
+        }
+      }
+      return undefined;
+    },
   });
 
   // 2. Render SVG to high-res PNG via Rust-backed Resvg

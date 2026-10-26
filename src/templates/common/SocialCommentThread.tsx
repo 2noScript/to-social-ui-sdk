@@ -14,12 +14,13 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
   const { comments, platform = "FACEBOOK", options = {} } = props;
   const isDark = options.theme !== "light";
 
-  const bg = isDark ? "#18191a" : "#ffffff";
-  const cardBg = isDark ? "#242526" : "#f0f2f5";
-  const textPrimary = isDark ? "#e4e6eb" : "#050505";
-  const textSecondary = isDark ? "#b0b3b8" : "#65676b";
-  const divider = isDark ? "#393a3b" : "#e4e6eb";
-  const replyLine = isDark ? "#3a3b3c" : "#ced0d4";
+  const bg = isDark ? "#242526" : "#ffffff";
+  const bubbleBg = isDark ? "#3A3B3C" : "#F0F2F5";
+  const badgeBg = isDark ? "#242526" : "#ffffff";
+  const textPrimary = isDark ? "#E4E6EB" : "#050505";
+  const textSecondary = isDark ? "#B0B3B8" : "#65676B";
+  const divider = isDark ? "#3E4042" : "#CED0D4";
+  const replyLine = isDark ? "#3E4042" : "#CED0D4";
 
   // Pre-resolve avatars
   const avatarMap = new Map<string, string>();
@@ -47,6 +48,8 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
   const title = options.title || "Comments";
   const totalCount = options.totalCount || comments.length;
 
+  const cardBorder = isDark ? "1px solid #3E4042" : "1px solid #CED0D4";
+
   return (
     <div
       style={{
@@ -54,46 +57,47 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
         flexDirection: "column",
         backgroundColor: bg,
         color: textPrimary,
-        borderRadius: 20,
-        padding: 24,
+        borderRadius: 10,
+        border: cardBorder,
+        padding: "16px 16px 20px 16px",
         fontFamily: "Inter, sans-serif",
-        boxShadow: "0 8px 30px rgba(0,0,0,0.25)",
+        boxShadow: isDark ? "0 1px 2px rgba(0,0,0,0.25)" : "0 1px 2px rgba(0,0,0,0.1)",
         width: 600,
         boxSizing: "border-box",
       }}
     >
-      {/* Thread Header */}
+      {/* Thread Header: Authentic Facebook Comments Header with Sorting Dropdown */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          paddingBottom: 16,
+          paddingBottom: 12,
           borderBottom: `1px solid ${divider}`,
           marginBottom: 16,
         }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ fontSize: 18, fontWeight: 700, color: textPrimary }}>
+          <span style={{ fontSize: 16, fontWeight: 700, color: textPrimary }}>
             {title}
           </span>
+          <span style={{ margin: "0 6px", color: textSecondary, fontWeight: 700 }}>•</span>
           <span
             style={{
-              marginLeft: 8,
-              fontSize: 13,
-              fontWeight: 600,
-              backgroundColor: cardBg,
+              fontSize: 14,
+              fontWeight: 500,
               color: textSecondary,
-              padding: "2px 8px",
-              borderRadius: 12,
             }}
           >
             {formatSocialCount(totalCount)}
           </span>
         </div>
-        <span style={{ fontSize: 13, color: textSecondary, fontWeight: 500 }}>
-          Top Comments
-        </span>
+        <div style={{ display: "flex", alignItems: "center", color: textSecondary, fontSize: 13, fontWeight: 600 }}>
+          <span>Most relevant</span>
+          <svg width={14} height={14} viewBox="0 0 20 20" fill="currentColor" style={{ marginLeft: 4 }}>
+            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+          </svg>
+        </div>
       </div>
 
       {/* Comment List */}
@@ -139,44 +143,46 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
                 {/* Avatar */}
                 <img
                   src={avatar}
-                  width={38}
-                  height={38}
+                  width={36}
+                  height={36}
                   style={{
-                    borderRadius: 19,
+                    borderRadius: 18,
                     objectFit: "cover",
-                    marginRight: 12,
+                    marginRight: 8,
                     flexShrink: 0,
                   }}
                 />
 
                 {/* Comment Body */}
-                <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+                <div style={{ display: "flex", flexDirection: "column", flexGrow: 1, alignItems: "flex-start" }}>
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      backgroundColor: cardBg,
-                      borderRadius: 16,
-                      padding: "10px 14px",
+                      backgroundColor: bubbleBg,
+                      borderRadius: 18,
+                      padding: "8px 12px 9px 12px",
                       position: "relative",
+                      alignSelf: "flex-start",
+                      maxWidth: "92%",
                     }}
                   >
                     {/* Author line */}
-                    <div style={{ display: "flex", alignItems: "center", marginBottom: 3 }}>
-                      <span style={{ fontWeight: 700, fontSize: 14, color: textPrimary, marginRight: 6 }}>
+                    <div style={{ display: "flex", alignItems: "center", lineHeight: "1.2308" }}>
+                      <span style={{ fontWeight: 600, fontSize: 13, color: textPrimary, marginRight: 4 }}>
                         {comment.author?.name || comment.author?.uniqueId || "User"}
                       </span>
-                      {comment.author?.isVerified && <VerifiedBadge size={14} />}
+                      {comment.author?.isVerified && <VerifiedBadge size={13} />}
                       {comment.author?.isAuthor && (
                         <span
                           style={{
                             marginLeft: 6,
-                            fontSize: 10,
-                            fontWeight: 700,
-                            backgroundColor: "#1877F2",
-                            color: "#ffffff",
+                            fontSize: 11,
+                            fontWeight: 600,
+                            backgroundColor: isDark ? "#4B4C4F" : "#E4E6EB",
+                            color: textPrimary,
                             padding: "1px 6px",
-                            borderRadius: 8,
+                            borderRadius: 4,
                           }}
                         >
                           Author
@@ -185,7 +191,7 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
                     </div>
 
                     {/* Text */}
-                    <div style={{ fontSize: 14, lineHeight: 1.45, color: textPrimary }}>
+                    <div style={{ fontSize: 15, lineHeight: "20px", color: textPrimary, marginTop: 3 }}>
                       {comment.text}
                     </div>
 
@@ -194,58 +200,61 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
                       <div
                         style={{
                           position: "absolute",
-                          bottom: -10,
-                          right: 12,
+                          bottom: -8,
+                          right: 4,
                           display: "flex",
                           alignItems: "center",
-                          backgroundColor: bg,
-                          border: `1px solid ${divider}`,
-                          borderRadius: 12,
-                          padding: "2px 6px",
-                          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                          backgroundColor: badgeBg,
+                          padding: "1px 5px 1px 2px",
+                          borderRadius: 10,
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.22)",
                         }}
                       >
-                        <div style={{ display: "flex", marginRight: 4 }}>
-                          {renderReactionIcon(comment.reactionType || "like", 14)}
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <div style={{ display: "flex", borderRadius: 8, border: `1.5px solid ${badgeBg}`, zIndex: 2 }}>
+                            {renderReactionIcon(comment.reactionType || "like", 16)}
+                          </div>
                         </div>
-                        <span style={{ fontSize: 11, fontWeight: 700, color: textSecondary }}>
+                        <span style={{ fontSize: 11, fontWeight: 400, color: textSecondary, marginLeft: 3 }}>
                           {formatSocialCount(comment.likes || 1)}
                         </span>
                       </div>
                     ) : null}
                   </div>
 
-                  {/* Actions & Time line */}
+                  {/* Actions & Time line: Like • Reply • Time • Liked by author */}
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
                       fontSize: 12,
                       color: textSecondary,
-                      fontWeight: 600,
+                      fontWeight: 700,
                       marginTop: 4,
-                      marginLeft: 8,
+                      marginLeft: 12,
                     }}
                   >
-                    <span>{formatSocialTime(comment.publishedAt, comment.timestamp)}</span>
-                    <span style={{ margin: "0 8px" }}>•</span>
-                    <span style={{ color: textSecondary }}>Like</span>
-                    <span style={{ margin: "0 8px" }}>•</span>
+                    <span style={{ color: comment.reactionType === "love" ? "#FA3E3E" : (comment.reactionType ? "#1877F2" : textSecondary) }}>
+                      Like
+                    </span>
+                    <span style={{ margin: "0 6px", fontWeight: 400 }}>•</span>
                     <span style={{ color: textSecondary }}>Reply</span>
+                    <span style={{ margin: "0 6px", fontWeight: 400 }}>•</span>
+                    <span style={{ fontWeight: 400 }}>{formatSocialTime(comment.publishedAt, comment.timestamp)}</span>
 
                     {comment.isAuthorLiked && (
                       <div
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          marginLeft: 12,
+                          marginLeft: 10,
                           backgroundColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)",
                           padding: "2px 6px",
                           borderRadius: 10,
                         }}
                       >
                         <span style={{ color: "#FA3E3E", marginRight: 4, fontSize: 11 }}>❤️</span>
-                        <span style={{ fontSize: 11, color: textSecondary }}>Liked by creator</span>
+                        <span style={{ fontSize: 11, color: textSecondary, fontWeight: 500 }}>Liked by author</span>
                       </div>
                     )}
                   </div>
@@ -293,18 +302,21 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
                         />
 
                         {/* Reply bubble */}
-                        <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+                        <div style={{ display: "flex", flexDirection: "column", flexGrow: 1, alignItems: "flex-start" }}>
                           <div
                             style={{
                               display: "flex",
                               flexDirection: "column",
-                              backgroundColor: cardBg,
-                              borderRadius: 14,
-                              padding: "8px 12px",
+                              backgroundColor: bubbleBg,
+                              borderRadius: 16,
+                              padding: "6px 10px 7px 10px",
+                              position: "relative",
+                              alignSelf: "flex-start",
+                              maxWidth: "92%",
                             }}
                           >
-                            <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-                              <span style={{ fontWeight: 700, fontSize: 13, color: textPrimary, marginRight: 4 }}>
+                            <div style={{ display: "flex", alignItems: "center", lineHeight: "1.2" }}>
+                              <span style={{ fontWeight: 600, fontSize: 12, color: textPrimary, marginRight: 4 }}>
                                 {reply.author?.name || "User"}
                               </span>
                               {reply.author?.isVerified && <VerifiedBadge size={12} />}
@@ -312,19 +324,19 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
                                 <span
                                   style={{
                                     marginLeft: 4,
-                                    fontSize: 9,
-                                    fontWeight: 700,
-                                    backgroundColor: "#1877F2",
-                                    color: "#ffffff",
+                                    fontSize: 10,
+                                    fontWeight: 600,
+                                    backgroundColor: isDark ? "#4B4C4F" : "#E4E6EB",
+                                    color: textPrimary,
                                     padding: "1px 5px",
-                                    borderRadius: 6,
+                                    borderRadius: 4,
                                   }}
                                 >
                                   Author
                                 </span>
                               )}
                             </div>
-                            <div style={{ fontSize: 13, lineHeight: 1.4, color: textPrimary }}>
+                            <div style={{ fontSize: 14, lineHeight: "18px", color: textPrimary, marginTop: 2 }}>
                               {reply.text}
                             </div>
                           </div>
@@ -335,16 +347,18 @@ export async function createSocialCommentThreadNode(props: SocialCommentThreadPr
                               alignItems: "center",
                               fontSize: 11,
                               color: textSecondary,
-                              fontWeight: 600,
+                              fontWeight: 700,
                               marginTop: 3,
-                              marginLeft: 6,
+                              marginLeft: 8,
                             }}
                           >
-                            <span>{formatSocialTime(reply.publishedAt, reply.timestamp)}</span>
-                            <span style={{ margin: "0 6px" }}>•</span>
                             <span>Like</span>
+                            <span style={{ margin: "0 6px", fontWeight: 400 }}>•</span>
+                            <span style={{ color: textSecondary }}>Reply</span>
+                            <span style={{ margin: "0 6px", fontWeight: 400 }}>•</span>
+                            <span style={{ fontWeight: 400 }}>{formatSocialTime(reply.publishedAt, reply.timestamp)}</span>
                             {reply.likes && reply.likes > 0 ? (
-                              <span style={{ marginLeft: 6, color: "#1877F2" }}>
+                              <span style={{ marginLeft: 6, color: "#1877F2", fontWeight: 600 }}>
                                 👍 {formatSocialCount(reply.likes)}
                               </span>
                             ) : null}
