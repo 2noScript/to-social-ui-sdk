@@ -19,6 +19,8 @@
     "test:facebook": "bun test ./tests/facebook",
     "test:tiktok": "bun test ./tests/tiktok",
     "test:youtube": "bun test ./tests/youtube",
+    "test:instagram": "bun test ./tests/instagram",
+    "test:twitter": "bun test ./tests/twitter",
     "test:bilibili": "bun test ./tests/bilibili",
     "test:profile": "bun test ./tests/profile"
   },

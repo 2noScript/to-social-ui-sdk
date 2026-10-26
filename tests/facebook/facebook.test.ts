@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, test } from "bun:test";
-import { renderPost, renderComment } from "../../src/index";
+import { renderPost, renderReel, renderComment, renderCommentThread } from "../../src/index";
 import type { UnifiedContent, UnifiedComment } from "../../src/types";
 
 const OUT_DIR = path.resolve("./output/facebook");
@@ -27,7 +27,7 @@ describe("📘 Facebook UI Templates", () => {
       likes: 42100,
       comments: 3820,
       shares: 12400,
-      reactions: { like: 35000, love: 7100 },
+      reactions: { like: 32000, love: 8900, care: 1200 },
     },
     media: {
       coverUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600",
@@ -35,7 +35,7 @@ describe("📘 Facebook UI Templates", () => {
     publishedAt: new Date(Date.now() - 3 * 3600 * 1000).toISOString(),
   };
 
-  test("renders Facebook Post Card (Light Theme) and saves to output/facebook", async () => {
+  test("renders Facebook Post Card (Light Theme with reactions) and saves to output/facebook", async () => {
     const res = await renderPost(sampleFbPost, { theme: "light" });
     expect(res.png).toBeDefined();
     expect(res.png.length).toBeGreaterThan(1000);
@@ -56,7 +56,21 @@ describe("📘 Facebook UI Templates", () => {
     expect(fs.existsSync(outPath)).toBe(true);
   });
 
-  test("renders Facebook Comment Bubble and saves to output/facebook", async () => {
+  test("renders Facebook Reel 9:16 Vertical Card and saves to output/facebook", async () => {
+    const reelContent: UnifiedContent = {
+      ...sampleFbPost,
+      description: "Spectacular deployment of Europa Clipper solar arrays in orbit! 🛰️✨",
+    };
+    const res = await renderReel(reelContent);
+    expect(res.png).toBeDefined();
+    expect(res.png.length).toBeGreaterThan(1000);
+
+    const outPath = path.join(OUT_DIR, "fb_reel_vertical.png");
+    await res.saveToFile(outPath);
+    expect(fs.existsSync(outPath)).toBe(true);
+  });
+
+  test("renders Facebook Comment Bubble with Love reaction and saves to output/facebook", async () => {
     const sampleComment: UnifiedComment = {
       id: "fb_c1",
       contentId: "101584930129",
@@ -67,6 +81,8 @@ describe("📘 Facebook UI Templates", () => {
         isVerified: true,
       },
       likes: 842,
+      reactionType: "love",
+      isAuthorLiked: true,
       timestamp: Date.now() - 25 * 60 * 1000,
     };
 
@@ -75,6 +91,69 @@ describe("📘 Facebook UI Templates", () => {
     expect(res.png.length).toBeGreaterThan(1000);
 
     const outPath = path.join(OUT_DIR, "fb_comment.png");
+    await res.saveToFile(outPath);
+    expect(fs.existsSync(outPath)).toBe(true);
+  });
+
+  test("renders Facebook Multi-Comment Thread with Pinned badge & nested replies", async () => {
+    const threadComments: UnifiedComment[] = [
+      {
+        id: "c_root_1",
+        contentId: "101584930129",
+        text: "Official telemetry confirms all systems nominal. Next milestone: Mars gravity assist in 2025!",
+        author: {
+          id: "NASA",
+          name: "NASA",
+          isVerified: true,
+          isAuthor: true,
+        },
+        isPinned: true,
+        likes: 3420,
+        reactionType: "love",
+        timestamp: Date.now() - 2 * 3600 * 1000,
+        replies: [
+          {
+            id: "c_rep_1",
+            contentId: "101584930129",
+            text: "Godspeed Europa Clipper! Such a proud moment for science! 🇺🇸🎉",
+            author: { id: "sarah_k", name: "Sarah Jenkins" },
+            likes: 154,
+            timestamp: Date.now() - 90 * 60 * 1000,
+          },
+          {
+            id: "c_rep_2",
+            contentId: "101584930129",
+            text: "Will the radar be able to penetrate 20km of ice crust?",
+            author: { id: "tech_curious", name: "Alex Chen" },
+            likes: 42,
+            timestamp: Date.now() - 45 * 60 * 1000,
+          },
+        ],
+      },
+      {
+        id: "c_root_2",
+        contentId: "101584930129",
+        text: "The engineering behind those 30-meter solar arrays in the radiation environment of Jupiter is mind-blowing.",
+        author: {
+          id: "engineer_bob",
+          name: "Robert Downey",
+        },
+        likes: 620,
+        reactionType: "like",
+        isAuthorLiked: true,
+        timestamp: Date.now() - 60 * 60 * 1000,
+      },
+    ];
+
+    const res = await renderCommentThread(threadComments, "FACEBOOK", {
+      title: "Comments",
+      totalCount: 3820,
+      theme: "dark",
+    });
+    expect(res.png).toBeDefined();
+    expect(res.png.length).toBeGreaterThan(1000);
+
+    const outPath = path.join(OUT_DIR, "fb_comment_thread_tree.png");
     await res.saveToFile(outPath);
     expect(fs.existsSync(outPath)).toBe(true);
   });

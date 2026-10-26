@@ -21,6 +21,7 @@ describe("🎵 TikTok UI Templates", () => {
       uniqueId: "gordonramsayofficial",
       name: "Gordon Ramsay",
       isVerified: true,
+      avatarUrl: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=150",
     },
     stats: {
       likes: 1250000,
@@ -50,7 +51,7 @@ describe("🎵 TikTok UI Templates", () => {
     expect(fs.existsSync(outPath)).toBe(true);
   });
 
-  test("renders TikTok Comment Row and saves to output/tiktok", async () => {
+  test("renders TikTok Comment Row with Creator Liked Badge and saves to output/tiktok", async () => {
     const sampleComment: UnifiedComment = {
       id: "tt_c1",
       contentId: "7689468618823847189",
@@ -59,9 +60,26 @@ describe("🎵 TikTok UI Templates", () => {
         id: "foodie_sarah",
         name: "Sarah Baker",
         uniqueId: "sarah_bakes",
+        avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
       },
+      isPinned: true,
+      isAuthorLiked: true,
       likes: 12400,
       timestamp: Date.now() - 4 * 3600 * 1000,
+      replies: [
+        {
+          id: "tt_r1",
+          contentId: "7689468618823847189",
+          text: "Well done! Keep cooking 🔥",
+          author: {
+            id: "gordonramsay",
+            name: "Gordon Ramsay",
+            isAuthor: true,
+          },
+          likes: 5400,
+          timestamp: Date.now() - 2 * 3600 * 1000,
+        },
+      ],
     };
 
     const res = await renderComment(sampleComment, "TIKTOK", { theme: "dark" });

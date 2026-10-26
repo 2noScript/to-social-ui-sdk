@@ -1,7 +1,7 @@
 import React from "react";
 import type { UnifiedContent, RenderOptions } from "../../types";
 import { formatSocialCount, formatSocialTime } from "../../utils/format";
-import { FbLikeIcon, FbLoveIcon, VerifiedBadge } from "../../utils/icons";
+import { FbLikeIcon, FbLoveIcon, FbCareIcon, FbHahaIcon, VerifiedBadge } from "../../utils/icons";
 import { resolveImageAsDataUri, createPlaceholderAvatar, createPlaceholderCover } from "../../utils/image";
 
 export interface FacebookPostCardProps {
@@ -162,6 +162,15 @@ export async function createFacebookPostCardNode(props: FacebookPostCardProps) {
             <div style={{ marginLeft: -4 }}>
               <FbLoveIcon size={18} />
             </div>
+            {content.stats?.reactions?.care ? (
+              <div style={{ marginLeft: -4 }}>
+                <FbCareIcon size={18} />
+              </div>
+            ) : content.stats?.reactions?.haha ? (
+              <div style={{ marginLeft: -4 }}>
+                <FbHahaIcon size={18} />
+              </div>
+            ) : null}
           </div>
           <span>{formatSocialCount(totalLikes)}</span>
         </div>

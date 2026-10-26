@@ -1,6 +1,7 @@
 import React from "react";
 import type { UnifiedComment, RenderOptions } from "../../types";
 import { formatSocialCount, formatSocialTime } from "../../utils/format";
+import { PinIcon, YouTubeLikeIcon, YouTubeDislikeIcon, CreatorHeartBadge } from "../../utils/icons";
 import { resolveImageAsDataUri, createPlaceholderAvatar } from "../../utils/image";
 
 export interface YouTubeCommentThreadProps {
@@ -15,6 +16,7 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
   const bg = isDark ? "#0f0f0f" : "#ffffff";
   const textPrimary = isDark ? "#f1f1f1" : "#0f0f0f";
   const textSecondary = isDark ? "#aaaaaa" : "#606060";
+  const badgeBg = isDark ? "#272727" : "#f2f2f2";
 
   const avatarUri = options.prefetchImages !== false
     ? await resolveImageAsDataUri(comment.author?.avatarUrl, () => createPlaceholderAvatar(comment.author?.name, 72, "#FF0000"))
@@ -28,7 +30,7 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
     <div
       style={{
         display: "flex",
-        alignItems: "flex-start",
+        flexDirection: "column",
         backgroundColor: bg,
         borderRadius: 16,
         padding: "16px 20px",
@@ -38,50 +40,115 @@ export async function createYouTubeCommentThreadNode(props: YouTubeCommentThread
         boxSizing: "border-box",
       }}
     >
-      <img
-        src={avatarUri}
-        width={40}
-        height={40}
-        style={{
-          borderRadius: 20,
-          objectFit: "cover",
-          marginRight: 14,
-          flexShrink: 0,
-        }}
-      />
-
-      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-        <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: textPrimary, marginRight: 6 }}>
-            {authorHandle}
-          </span>
-          <span style={{ fontSize: 12, color: textSecondary }}>{timeStr}</span>
+      {/* Pinned Tag */}
+      {comment.isPinned && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            fontSize: 12,
+            fontWeight: 600,
+            color: textSecondary,
+            marginBottom: 8,
+            marginLeft: 54,
+          }}
+        >
+          <PinIcon size={13} color={textSecondary} />
+          <span style={{ marginLeft: 6 }}>Pinned by creator</span>
         </div>
+      )}
 
-        <div style={{ fontSize: 14, lineHeight: 1.45, color: textPrimary, marginBottom: 8, wordBreak: "break-word" }}>
-          {comment.text}
-        </div>
+      <div style={{ display: "flex", alignItems: "flex-start", width: "100%" }}>
+        <img
+          src={avatarUri}
+          width={40}
+          height={40}
+          style={{
+            borderRadius: 20,
+            objectFit: "cover",
+            marginRight: 14,
+            flexShrink: 0,
+          }}
+        />
 
-        <div style={{ display: "flex", alignItems: "center", fontSize: 12, color: textSecondary }}>
-          {/* Thumbs up */}
-          <div style={{ display: "flex", alignItems: "center", marginRight: 16 }}>
-            <svg width={14} height={14} viewBox="0 0 24 24" fill={textSecondary} style={{ marginRight: 5 }}>
-              <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" />
-            </svg>
-            <span>{formatSocialCount(likesCount)}</span>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 700,
+                color: comment.author?.isAuthor ? "#ffffff" : textPrimary,
+                backgroundColor: comment.author?.isAuthor ? "#888888" : "transparent",
+                padding: comment.author?.isAuthor ? "1px 6px" : "0",
+                borderRadius: comment.author?.isAuthor ? 10 : 0,
+                marginRight: 6,
+              }}
+            >
+              {authorHandle}
+            </span>
+            <span style={{ fontSize: 12, color: textSecondary }}>{timeStr}</span>
           </div>
 
-          {/* Thumbs down */}
-          <div style={{ display: "flex", alignItems: "center", marginRight: 16 }}>
-            <svg width={14} height={14} viewBox="0 0 24 24" fill={textSecondary}>
-              <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.37-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z" />
-            </svg>
+          <div style={{ fontSize: 14, lineHeight: 1.45, color: textPrimary, marginBottom: 8, wordBreak: "break-word" }}>
+            {comment.text}
           </div>
 
-          {/* Reply */}
-          <span style={{ fontWeight: 600 }}>Reply</span>
+          <div style={{ display: "flex", alignItems: "center", fontSize: 12, color: textSecondary }}>
+            {/* Thumbs up */}
+            <div style={{ display: "flex", alignItems: "center", marginRight: 16 }}>
+              <div style={{ marginRight: 5 }}>
+                <YouTubeLikeIcon size={14} fill={textSecondary} />
+              </div>
+              <span>{formatSocialCount(likesCount)}</span>
+            </div>
+
+            {/* Thumbs down */}
+            <div style={{ display: "flex", alignItems: "center", marginRight: 16 }}>
+              <YouTubeDislikeIcon size={14} fill={textSecondary} />
+            </div>
+
+            {/* Creator Heart */}
+            {comment.isAuthorLiked && (
+              <div style={{ display: "flex", alignItems: "center", marginRight: 16 }}>
+                <CreatorHeartBadge size={18} />
+              </div>
+            )}
+
+            {/* Reply */}
+            <span style={{ fontWeight: 600 }}>Reply</span>
+          </div>
         </div>
       </div>
+
+      {/* Replies */}
+      {comment.replies && comment.replies.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", marginLeft: 54, marginTop: 12 }}>
+          <div style={{ display: "flex", alignItems: "center", color: "#3EA6FF", fontSize: 13, fontWeight: 700, marginBottom: 8 }}>
+            ▼ {comment.replies.length} replies
+          </div>
+          {comment.replies.slice(0, 2).map((r, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", marginTop: 6 }}>
+              <img
+                src={createPlaceholderAvatar(r.author?.name, 48, "#FF0000")}
+                width={26}
+                height={26}
+                style={{ borderRadius: 13, marginRight: 10 }}
+              />
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: textPrimary, marginRight: 6 }}>
+                    {r.author?.name || r.author?.uniqueId || "User"}
+                  </span>
+                  <span style={{ fontSize: 11, color: textSecondary }}>
+                    {formatSocialTime(r.publishedAt, r.timestamp)}
+                  </span>
+                </div>
+                <span style={{ fontSize: 13, color: textPrimary, marginTop: 2 }}>{r.text}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

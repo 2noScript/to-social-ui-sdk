@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, test } from "bun:test";
-import { renderPost, renderComment } from "../../src/index";
+import { renderPost, renderShorts, renderComment } from "../../src/index";
 import type { UnifiedContent, UnifiedComment } from "../../src/types";
 
 const OUT_DIR = path.resolve("./output/youtube");
@@ -20,6 +20,7 @@ describe("▶️ YouTube UI Templates", () => {
       id: "tech_lead",
       name: "Fireship Code",
       isVerified: true,
+      avatarUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
     },
     stats: {
       views: 384000,
@@ -36,7 +37,7 @@ describe("▶️ YouTube UI Templates", () => {
     publishedAt: new Date(Date.now() - 5 * 86400 * 1000).toISOString(),
   };
 
-  test("renders YouTube Video Card and saves to output/youtube", async () => {
+  test("renders YouTube 16:9 Video Card and saves to output/youtube", async () => {
     const res = await renderPost(sampleYtVideo, { theme: "dark" });
     expect(res.png).toBeDefined();
     expect(res.png.length).toBeGreaterThan(1000);
@@ -47,7 +48,25 @@ describe("▶️ YouTube UI Templates", () => {
     expect(fs.existsSync(outPath)).toBe(true);
   });
 
-  test("renders YouTube Comment Thread and saves to output/youtube", async () => {
+  test("renders YouTube 9:16 Shorts Card and saves to output/youtube", async () => {
+    const shortsContent: UnifiedContent = {
+      ...sampleYtVideo,
+      title: "Why Rust + Satori is 100x faster than Puppeteer for UI rendering #shorts #coding",
+      media: {
+        coverUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500",
+      },
+    };
+
+    const res = await renderShorts(shortsContent);
+    expect(res.png).toBeDefined();
+    expect(res.png.length).toBeGreaterThan(1000);
+
+    const outPath = path.join(OUT_DIR, "youtube_shorts_vertical.png");
+    await res.saveToFile(outPath);
+    expect(fs.existsSync(outPath)).toBe(true);
+  });
+
+  test("renders YouTube Comment with Creator Heart & Pinned Badge", async () => {
     const sampleComment: UnifiedComment = {
       id: "yt_c1",
       contentId: "dQw4w9WgXcQ",
@@ -57,8 +76,24 @@ describe("▶️ YouTube UI Templates", () => {
         name: "Alex Dev",
         isVerified: false,
       },
-      likes: 312,
+      isPinned: true,
+      isAuthorLiked: true,
+      likes: 812,
       timestamp: Date.now() - 12 * 3600 * 1000,
+      replies: [
+        {
+          id: "yt_r1",
+          contentId: "dQw4w9WgXcQ",
+          text: "Glad it helped! The full code repository is in the description.",
+          author: {
+            id: "tech_lead",
+            name: "Fireship Code",
+            isAuthor: true,
+          },
+          likes: 120,
+          timestamp: Date.now() - 6 * 3600 * 1000,
+        },
+      ],
     };
 
     const res = await renderComment(sampleComment, "YOUTUBE", { theme: "dark" });
